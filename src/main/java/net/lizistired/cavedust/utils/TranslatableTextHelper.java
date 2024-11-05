@@ -3,8 +3,6 @@ package net.lizistired.cavedust.utils;
 import com.minelittlepony.common.client.gui.element.AbstractSlider;
 import net.minecraft.text.Text;
 
-import javax.swing.*;
-
 public class TranslatableTextHelper {
     public Text formatMaxWidth(AbstractSlider<Float> slider) {
         return Text.translatable("menu.cavedust.width", (int)Math.floor(slider.getValue()));

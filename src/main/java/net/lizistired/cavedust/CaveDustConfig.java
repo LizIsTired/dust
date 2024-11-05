@@ -3,8 +3,8 @@ package net.lizistired.cavedust;
 import net.lizistired.cavedust.utils.JsonFile;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import static net.lizistired.cavedust.CaveDust.*;
@@ -122,23 +122,24 @@ public class CaveDustConfig extends JsonFile {
         return caveDustEnabled;
     }
 
-    public ParticleEffect setParticle(String particleType){
+    //todo
+    //public Identifier setParticle(String particleType){
         //particleName = particleType;
-        save();
-        return getParticle();
-    }
+        //save();
+        //return getParticle().get().getKey().get().getValue();
+   //}
 
-    public ParticleEffect getParticle(){
-        try {
-            return (ParticleEffect) Registries.PARTICLE_TYPE.get(Identifier.of(Registries.PARTICLE_TYPE.getEntry(getParticleID()).get().getKey().get().getValue().toString().toLowerCase()));
-        } catch (ClassCastException e) {
-            MinecraftClient.getInstance().player.sendMessage(Text.translatable("debug.cavedust.particleerror"), true);
-            LOGGER.error("Cannot spawn particle, check config.");
-            iterateParticle();
-            save();
-            return getParticle();
-        }
-    }
+    //public ParticleEffect getParticle(){
+    //    try {
+    //        return Registries.PARTICLE_TYPE.getOptional(Identifier.of(Registries.PARTICLE_TYPE.getOptional(getParticleID()).get().getKey().get().getValue().toString().toLowerCase()));
+    //    } catch (ClassCastException e) {
+    //        MinecraftClient.getInstance().player.sendMessage(Text.translatable("debug.cavedust.particleerror"), true);
+    //        LOGGER.error("Cannot spawn particle, check config.");
+    //        iterateParticle();
+    //        save();
+    //        return getParticle();
+    //    }
+    //}
 
     public boolean getSeaLevelCheck() {
         return seaLevelCheck;
@@ -175,27 +176,29 @@ public class CaveDustConfig extends JsonFile {
         return getSuperFlatStatus();
     }
 
-    public void iterateParticle(){
-        if(getParticleID() > Registries.PARTICLE_TYPE.size() - 2) {
-            particleID = 1;
-            save();
-        } else {
-            particleID = getParticleID() + 1;
-            save();
-        }
-    }
+    //todo
+    //public void iterateParticle(){
+    //    if(getParticleID() > Registries.PARTICLE_TYPE.size() - 2) {
+    //        particleID = 1;
+    //        save();
+    //    } else {
+    //        particleID = getParticleID() + 1;
+    //        save();
+    //    }
+    //}
 
     public void setParticleID(int particleID){
         this.particleID = particleID;
         save();
     }
 
-    public int getParticleID(){
-        if ((!Registries.PARTICLE_TYPE.getEntry(particleID).isPresent())) {
-            setParticleID(WHITE_ASH_ID);
-        }
-        return particleID;
-    }
+    //todo
+    //public int getParticleID(){
+    //    if ((!Registries.PARTICLE_TYPE.getValueOrThrow())) {
+    //        setParticleID(WHITE_ASH_ID);
+    //    }
+    //    return particleID;
+    //}
 
     public void resetConfig(){
         width = 10;

@@ -4,6 +4,7 @@ package net.lizistired.cavedust;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -90,12 +91,15 @@ public class CaveDust implements ClientModInitializer {
 
 				if (shouldParticlesSpawn(client, config, particlePos)) {
 					if (client.world.getBlockState(particlePos).isAir()) {
-						world.addParticle(config.getParticle(), miniX, miniY, miniZ, config.getVelocityRandomnessRandom() * 0.01, config.getVelocityRandomnessRandom() * 0.01, config.getVelocityRandomnessRandom() * 0.01);
+						//todo
+						//world.addParticle(config.getParticle(), miniX, miniY, miniZ, config.getVelocityRandomnessRandom() * 0.01, config.getVelocityRandomnessRandom() * 0.01, config.getVelocityRandomnessRandom() * 0.01);
+						world.addParticle(CaveDustServer.CAVE_DUST, miniX, miniY, miniZ, config.getVelocityRandomnessRandom() * 0.01, config.getVelocityRandomnessRandom() * 0.01, config.getVelocityRandomnessRandom() * 0.01);
 					}
 				}
 			}
 			catch (NullPointerException e) {
 				LOGGER.error(String.valueOf(e));
+				//todo
 				//getConfig().setParticleID(WHITE_ASH_ID);
 			}
 		}

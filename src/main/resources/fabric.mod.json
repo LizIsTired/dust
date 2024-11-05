@@ -19,10 +19,7 @@
       "net.lizistired.cavedust.CaveDust"
     ],
     "main": [
-      "net.lizistired.cavedust.CaveDustServer"],
-    "modmenu": [
-      "net.lizistired.cavedust.CaveDustModMenuFactory"
-    ]
+      "net.lizistired.cavedust.CaveDustServer"]
   },
   "mixins": [
     "dust.mixins.json"
@@ -30,7 +27,7 @@
   "depends": {
     "fabricloader": ">=0.14.5",
     "fabric": "*",
-    "minecraft": "1.21",
+    "minecraft": "1.21.3",
     "java": ">=17"
   },
   "suggests": {

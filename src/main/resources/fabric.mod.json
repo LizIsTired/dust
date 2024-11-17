@@ -19,10 +19,13 @@
       "net.lizistired.cavedust.CaveDust"
     ],
     "main": [
-      "net.lizistired.cavedust.CaveDustServer"]
+      "net.lizistired.cavedust.CaveDustServer"],
+    "modmenu": [
+      "net.lizistired.cavedust.CaveDustModMenuFactory"
+    ]
   },
   "mixins": [
-    "dust.mixins.json"
+    "cavedust.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.14.5",

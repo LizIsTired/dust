@@ -3,9 +3,11 @@ package net.lizistired.cavedust;
 //minecraft imports
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 //other imports
@@ -40,7 +42,7 @@ public class CaveDust implements ClientModInitializer {
 		return config;
 	}
 
-	public static int WHITE_ASH_ID = Registries.PARTICLE_TYPE.getRawId(CaveDustServer.CAVE_DUST);
+	public static ParticleEffect WHITE_ASH_ID = (ParticleEffect) Registries.PARTICLE_TYPE.get(Identifier.of("cavedust", "cave_dust"));
 	public static int PARTICLE_AMOUNT = 0;
 
 
@@ -74,13 +76,13 @@ public class CaveDust implements ClientModInitializer {
 		//ensure world is not null
 		if (client.world == null) return;
 		World world = client.world;
+
 		//LOGGER.info(String.valueOf(((ClientWorldAccessor) client.world.getLevelProperties()).getFlatWorld()));
 		// )
 		double probabilityNormalized = normalize(config.getLowerLimit(), config.getUpperLimit(), client.player.getBlockY());
 		PARTICLE_AMOUNT = (int) (probabilityNormalized * config.getParticleMultiplier() * config.getParticleMultiplierMultiplier());
 
 		for (int i = 0; i < PARTICLE_AMOUNT; i++) {
-			try {
 				int x = (int) (client.player.getPos().getX() + (int) generateRandomDouble(config.getDimensionWidth() *-1, config.getDimensionWidth()));
 				int y = (int) (client.player.getEyePos().getY() + (int) generateRandomDouble(config.getDimensionHeight() *-1, config.getDimensionHeight()));
 				int z = (int) (client.player.getPos().getZ() + (int) generateRandomDouble(config.getDimensionWidth() *-1, config.getDimensionWidth()));
@@ -91,17 +93,9 @@ public class CaveDust implements ClientModInitializer {
 
 				if (shouldParticlesSpawn(client, config, particlePos)) {
 					if (client.world.getBlockState(particlePos).isAir()) {
-						//todo
-						//world.addParticle(config.getParticle(), miniX, miniY, miniZ, config.getVelocityRandomnessRandom() * 0.01, config.getVelocityRandomnessRandom() * 0.01, config.getVelocityRandomnessRandom() * 0.01);
-						world.addParticle(CaveDustServer.CAVE_DUST, miniX, miniY, miniZ, config.getVelocityRandomnessRandom() * 0.01, config.getVelocityRandomnessRandom() * 0.01, config.getVelocityRandomnessRandom() * 0.01);
+						world.addParticle(getConfig().getParticle(), miniX, miniY, miniZ, config.getVelocityRandomnessRandom() * 0.01, config.getVelocityRandomnessRandom() * 0.01, config.getVelocityRandomnessRandom() * 0.01);
 					}
 				}
 			}
-			catch (NullPointerException e) {
-				LOGGER.error(String.valueOf(e));
-				//todo
-				//getConfig().setParticleID(WHITE_ASH_ID);
-			}
 		}
 	}
-}

@@ -1,16 +1,23 @@
 package net.lizistired.cavedust;
 
+import com.google.common.collect.ImmutableList;
 import net.lizistired.cavedust.utils.JsonFile;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleType;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import static net.lizistired.cavedust.CaveDust.*;
 import static net.lizistired.cavedust.utils.MathHelper.*;
 
 import java.nio.file.Path;
+import java.util.*;
 
 public class CaveDustConfig extends JsonFile {
     private transient final net.lizistired.cavedust.CaveDust CaveDust;
@@ -27,9 +34,13 @@ public class CaveDustConfig extends JsonFile {
     private float lowerLimit = -64;
     private int particleMultiplier = 1;
 
+    int listNumber = 0;
+
     private int particleMultiplierMultiplier = 10;
 
-    private int particleID = WHITE_ASH_ID;
+    List<Identifier> list = List.of(Registries.PARTICLE_TYPE.getIds().toArray(new Identifier[0]));
+
+    Identifier newId = Identifier.of("cavedust", "cave_dust");
 
     public CaveDustConfig(Path file, net.lizistired.cavedust.CaveDust caveDust) {
         super(file);
@@ -141,6 +152,16 @@ public class CaveDustConfig extends JsonFile {
     //    }
     //}
 
+    public ParticleEffect getParticle(){
+        try{
+            return (ParticleEffect) Registries.PARTICLE_TYPE.get(newId);
+        }
+        catch (ClassCastException e){
+            iterateParticle();
+            return getParticle();
+        }
+    }
+
     public boolean getSeaLevelCheck() {
         return seaLevelCheck;
     }
@@ -176,29 +197,20 @@ public class CaveDustConfig extends JsonFile {
         return getSuperFlatStatus();
     }
 
-    //todo
-    //public void iterateParticle(){
-    //    if(getParticleID() > Registries.PARTICLE_TYPE.size() - 2) {
-    //        particleID = 1;
-    //        save();
-    //    } else {
-    //        particleID = getParticleID() + 1;
-    //        save();
-    //    }
-    //}
-
-    public void setParticleID(int particleID){
-        this.particleID = particleID;
+    public void iterateParticle() {
+        try {
+            listNumber = listNumber + 1;
+            newId = list.get(listNumber);
+        } catch (IndexOutOfBoundsException e){
+            newId = list.get(0);
+            listNumber = 0;
+        }
         save();
     }
 
-    //todo
-    //public int getParticleID(){
-    //    if ((!Registries.PARTICLE_TYPE.getValueOrThrow())) {
-    //        setParticleID(WHITE_ASH_ID);
-    //    }
-    //    return particleID;
-    //}
+    public ParticleEffect getParticleID(){
+        return getParticle();
+    }
 
     public void resetConfig(){
         width = 10;
@@ -211,9 +223,10 @@ public class CaveDustConfig extends JsonFile {
         particleMultiplierMultiplier = 10;
         velocityRandomness = 0;
 
+        newId = Identifier.of("cavedust", "cave_dust");
+
         seaLevelCheck = true;
         caveDustEnabled = true;
-        particleID = WHITE_ASH_ID;
         save();
     }
 }

@@ -5,6 +5,7 @@ import com.minelittlepony.common.client.gui.element.*;
 import net.lizistired.cavedust.utils.TranslatableTextHelper;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.particle.ParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
@@ -67,12 +68,11 @@ public class ModMenuConfigScreen extends GameGui {
                 .onChange(config::setParticleMultiplierMultiplier)
                 .setTextFormat(transText::formatParticleMultiplierMultiplier)
                 .getStyle().setTooltip(Text.translatable("menu.cavedust.particlemultipliermultiplier.tooltip"));
-        //todo
-        //addButton(new Button(left, row += 24).onClick(sender ->{
-        //    config.iterateParticle();
-        //    sender.getStyle().setText("Particle: " + (getNameOfParticle()));
-        //})).getStyle().setText("Particle: " + (getNameOfParticle()))
-        //        .setTooltip(Text.translatable("menu.cavedust.particle.tooltip"));
+        addButton(new Button(left, row += 24).onClick(sender ->{
+            config.iterateParticle();
+            sender.getStyle().setText("Particle: " + (getNameOfParticle()));
+        })).getStyle().setText("Particle: " + (getNameOfParticle()))
+                .setTooltip(Text.translatable("menu.cavedust.particle.tooltip"));
 
         addButton(new Slider(left += 220, row -= 96, 1, 50, config.getDimensionWidth()))
                 .onChange(config::setDimensionWidth)
@@ -108,14 +108,15 @@ public class ModMenuConfigScreen extends GameGui {
         renderBackground(context, mouseX, mouseY, partialTicks);
         super.render(context, mouseX, mouseY, partialTicks);
     }
-    //todo
-    //private String getNameOfParticle(){
-    //    CaveDustConfig config = CaveDust.getInstance().getConfig();
-    //    config.load();
-    //    try {
-    //        return Registries.PARTICLE_TYPE.getEntry(config.getParticleID()).get().getKey().get().getValue().toString();
-    //    } catch (NoSuchElementException e){
-    //        return "null";
-    //    }
-    //}
+
+    private String getNameOfParticle(){
+        CaveDustConfig config = CaveDust.getInstance().getConfig();
+        config.load();
+        try {
+            return Registries.PARTICLE_TYPE.getEntry((ParticleType<?>) config.getParticleID()).getIdAsString();
+        } catch (NoSuchElementException e){
+            CaveDust.LOGGER.error(String.valueOf(e));
+            return "null";
+        }
+    }
 }

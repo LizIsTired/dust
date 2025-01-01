@@ -28,6 +28,10 @@
   "menu.cavedust.superflatstatus.tooltip": "Should particles spawn on superflat worlds?",
   "menu.cavedust.particle": "Particle: ",
   "menu.cavedust.particle.tooltip": "Particle to spawn. Click to cycle.",
+  "menu.cavedust.scalelower": "Minimum scale: %s",
+  "menu.cavedust.scalelower.tooltip": "Minimum particle size to spawn.",
+  "menu.cavedust.scalehigher": "Maximum scale: %s",
+  "menu.cavedust.scalehigher.tooltip": "Maximum particle size to spawn.",
 
   "key.cavedust.reload": "Reload Config",
   "key.cavedust.toggle": "Toggle Particles",

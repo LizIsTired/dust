@@ -5,8 +5,10 @@ import com.minelittlepony.common.client.gui.element.*;
 import net.lizistired.cavedust.utils.TranslatableTextHelper;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.particle.ParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.NoSuchElementException;
@@ -107,13 +109,15 @@ public class ModMenuConfigScreen extends GameGui {
         renderBackground(context);
         super.render(context, mouseX, mouseY, partialTicks);
     }
-    private String getNameOfParticle(){
+
+    private Identifier getNameOfParticle(){
         CaveDustConfig config = CaveDust.getInstance().getConfig();
         config.load();
         try {
-            return Registries.PARTICLE_TYPE.getEntry(config.getParticleID()).get().getKey().get().getValue().toString();
-        } catch (NoSuchElementException e){
-            return "null";
+            return Registries.PARTICLE_TYPE.getId((ParticleType<?>) config.getParticleID());
+        } catch (NoSuchElementException e) {
+            CaveDust.LOGGER.error(String.valueOf(e));
+            return null;
         }
     }
 }

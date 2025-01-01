@@ -4,9 +4,11 @@ package net.lizistired.cavedust;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 //other imports
@@ -40,7 +42,7 @@ public class CaveDust implements ClientModInitializer {
 	public net.lizistired.cavedust.CaveDustConfig getConfig() {
 		return config;
 	}
-	public static int WHITE_ASH_ID = Registries.PARTICLE_TYPE.getRawId(CaveDustServer.CAVE_DUST);
+	public static ParticleEffect WHITE_ASH_ID = (ParticleEffect) Registries.PARTICLE_TYPE.get(Identifier.of("cavedust", "cave_dust"));
 	public static int PARTICLE_AMOUNT = 0;
 
 

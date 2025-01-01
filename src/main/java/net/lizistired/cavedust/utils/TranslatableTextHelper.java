@@ -28,4 +28,12 @@ public class TranslatableTextHelper {
     public Text formatVelocityRandomness(AbstractSlider<Float> slider) {
         return Text.translatable("menu.cavedust.velocityrandomness", (int) Math.floor(slider.getValue()));
     }
+
+    public Text formatScaleLower(AbstractSlider<Float> slider) {
+        return Text.translatable("menu.cavedust.scalelower", (int) Math.floor(slider.getValue()));
+    }
+
+    public Text formatScaleHigher(AbstractSlider<Float> slider) {
+        return Text.translatable("menu.cavedust.scalehigher", (int) Math.floor(slider.getValue()));
+    }
 }

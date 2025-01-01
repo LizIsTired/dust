@@ -2,9 +2,12 @@ package net.lizistired.cavedust;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.lizistired.cavedust.utils.MathHelper;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.ParticleEffect;
+import org.jetbrains.annotations.Nullable;
 
 public class CaveDustParticleFactory extends SpriteBillboardParticle {
     private final SpriteProvider spriteProvider;
@@ -12,7 +15,6 @@ public class CaveDustParticleFactory extends SpriteBillboardParticle {
         super(clientWorld, x, y, z);
         this.spriteProvider = spriteProvider; //Sets the sprite provider from above to the sprite provider in the constructor method
         this.maxAge = 200; //20 ticks = 1 second
-        this.scale = 0.1f;
         this.velocityX = velocityX; //The velX from the constructor parameters
         this.velocityY = -0.007f; //Allows the particle to slowly fall
         this.velocityZ = velocityZ;
@@ -47,7 +49,8 @@ public class CaveDustParticleFactory extends SpriteBillboardParticle {
         }
 
 
-        public Particle createParticle(DefaultParticleType type, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+        @Override
+        public @Nullable Particle createParticle(DefaultParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
             return new CaveDustParticleFactory(world, x, y, z, velocityX, velocityY, velocityZ, this.spriteProvider);
         }
     }
